@@ -7,6 +7,11 @@ const noteSchema = new mongoose.Schema(
       ref: "Notebook",
       required: true,
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     title: {
       type: String,
       default: "Untitled Note",
