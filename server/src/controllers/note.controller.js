@@ -31,9 +31,13 @@ exports.updateNote = async (req, res) => {
       req.body,
       { new: true }
     );
+    if (!note) {
+      return res.status(404).json({ message: "Note not found" });
+    }
     res.json(note);
   } catch (err) {
-    res.status(500).json({ message: "Failed to update note" });
+    console.error("Update note error:", err);
+    res.status(500).json({ message: "Failed to update note", error: err.message });
   }
 };
 
