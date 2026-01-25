@@ -24,6 +24,20 @@ exports.getNotebooks = async (req, res) => {
   }
 };
 
+exports.getNotebook = async (req, res) => {
+  try {
+    const notebook = await Notebook.findOne({
+      _id: req.params.id,
+      userId: req.user.id,
+      deleted: { $ne: true },
+    });
+    if (!notebook) return res.status(404).json({ message: "Notebook not found" });
+    res.json(notebook);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch notebook" });
+  }
+};
+
 exports.deleteNotebook = async (req, res) => {
   try {
     const notebook = await Notebook.findOneAndUpdate(
